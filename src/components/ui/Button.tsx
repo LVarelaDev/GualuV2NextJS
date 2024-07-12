@@ -8,7 +8,7 @@ type TButtonProps = {
     | (() => void)
     | (() => Promise<void>)
     | ((prevState: any) => React.SetStateAction<any>);
-  color: string;
+  color?: "bg-greenSmooth" | "bg-primary" | "bg-purplePrimary";
   className?: string;
   loading?: boolean;
   loadingText?: string;
@@ -16,12 +16,13 @@ type TButtonProps = {
   iconPosition?: "left" | "right";
   rounded?: "rounded-md" | "rounded-full";
   padding?: "px-4 py-2" | "px-4 py-0";
+  bold?: boolean;
 };
 
 function Button({
   children,
   onClick,
-  color,
+  color = "bg-primary",
   className,
   loading,
   loadingText,
@@ -29,10 +30,11 @@ function Button({
   iconPosition = "right",
   rounded = "rounded-md",
   padding = "px-4 py-2",
+  bold = false,
 }: Readonly<TButtonProps>) {
   const colorResolveClass = `${
     outline
-      ? `bg-white border border-solid ${color} ${color}`
+      ? `bg-white border border-solid border-${color}`
       : `text-white ${color}`
   }  hover:bg-opacity-80 hover:shadow-md ${loading ? "bg-opacity-80" : ""}`;
 
@@ -43,9 +45,13 @@ function Button({
   return (
     <button
       disabled={loading}
-      className={`${colorResolveClass} justify-center ${rounded} ${padding} align-middle font-bold ${className} text-base`}
+      className={`justify-center ${rounded} ${padding} ${
+        bold ? "font-bold" : ""
+      } align-middle ${className} text-base`}
       onClick={onClick}
-    >{children}</button>
+    >
+      {children}
+    </button>
   );
 }
 

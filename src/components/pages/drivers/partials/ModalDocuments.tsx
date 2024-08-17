@@ -18,12 +18,13 @@ const ModalDocuments = ({ idDriver }: props) => {
     { id: 4, name: "mango" },
   ];
 
-  const value = watch("listdata");
   return (
     <div className="flex flex-col w-full h-ful p-4 bg-white border border-gray-200 rounded-md">
       Hola Esto es un modal que quiere consultar los datos del conductor con id:{" "}
       {idDriver}
       <FInputDate name="fechaVencimiento" label = "Fecha vencimiento" form={form}/>
+      <FInputDate name="fecha2" label = "Fecha vencimiento" form={form}/>
+
       <FInput type="text" form={form} name="Fecha vencimiento" />
       
     </div>

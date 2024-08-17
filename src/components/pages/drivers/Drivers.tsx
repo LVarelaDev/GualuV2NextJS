@@ -17,6 +17,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 import ModalDocuments from "./partials/ModalDocuments";
+import { Link } from "next-view-transitions";
 
 const Drivers = () => {
   const form = useForm();
@@ -61,13 +62,18 @@ const Drivers = () => {
     setShowModal(true);
   };
 
+  const handlerEditDriver = () => {};
+
   const renderButtonsActions = (r: DriversDto) => {
     return (
       <div className="flex gap-2 justify-center items-center">
-        <FontAwesomeIcon
-          icon={faPenToSquare}
-          className="cursor-pointer text-blue-600"
-        />
+        <Link href={`/drivers/${r.documento}`}>
+          <FontAwesomeIcon
+            icon={faPenToSquare}
+            className="cursor-pointer text-blue-600"
+          />
+        </Link>
+
         <button
           onClick={() => {
             handleConsole(r);
@@ -90,14 +96,13 @@ const Drivers = () => {
 
   return (
     <>
-    <div className="h-[592px] w-full overflow-y-auto custom-scroll p-5">
-      <div className="flex flex-col gap-5 pb-5">
+      <div className="flex flex-col gap-5">
         <div className="flex justify-between items-center gap-5">
-          <Button className="bg-purplePrimary text-white" onClick={() => {}}>
-            Crear nuevo
-          </Button>
+          <Link href={`/drivers/0`} className="bg-purplePrimary text-white rounded-md p-3">
+            Nuevo conductor
+          </Link>
         </div>
-        <div className="flex flex-col rounded-md bg-white shadow-sm p-4 gap-3 h-[calc(100%-30px)] border-gray-300 overflow-hidden">
+        <div className="flex flex-col rounded-md bg-white shadow-sm p-4 gap-3 border-gray-300 overflow-hidden">
           <div className="flex justify-between items-center px-2">
             <Text color="text-gray-600" weigth="font-bold">
               Listado de conductores
@@ -177,7 +182,6 @@ const Drivers = () => {
       >
         <ModalDocuments idDriver={idDriverSelected} />
       </Modal>
-    </div>
     </>
   );
 };

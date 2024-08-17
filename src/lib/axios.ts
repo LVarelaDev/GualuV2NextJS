@@ -6,6 +6,7 @@ import axios from "axios";
 export enum DriversEndPoints {
   GetDrivers = "GetConductoresWhitOutPaginator",
   GetDriversPaginated = "GetConductores",
+  GetDriverByDocument = "GetConductor",
 }
 
 // Verifica que la URL base esté configurada
@@ -38,13 +39,13 @@ instance.interceptors.response.use(
     } else {
       console.error("Error in setting up request:", error.message);
     }
-    return Promise.reject(error);
+    return Promise.reject(new Error(error));
   }
 );
 
-export const getDrivers = async () => {
-  const response = await instance.get<DriversDto[]>(
-    DriversEndPoints.GetDrivers
+export const getDriverByDocument = async (document: string) => {
+  const response = await instance.get<DriversDto>(
+    `${DriversEndPoints.GetDriverByDocument}?id=${encodeURIComponent(document)}`
   );
   return response.data;
 };

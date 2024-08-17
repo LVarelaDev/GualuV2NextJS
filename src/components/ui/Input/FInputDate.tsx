@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { format } from "date-fns";
+import { useEffect, useRef, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
-import dayjs from "dayjs";
 
 const MONTH_NAMES = [
   "Enero",
@@ -82,14 +80,17 @@ const FInputDate = ({ label, name, form }: FInputDateProps) => {
 
   const { register, formState, watch, setValue } = form;
 
-  const errorInput = formState.errors[name];
+  useEffect(() => {
+    register(name);
+  }, [name, register]);
 
-  const inputValue = watch(name);
-  console.log(inputValue)
+  useEffect(() => {
+    setValue(name, new Date(datepickerValue));
+  }, [datepickerValue, name, setValue]);
 
   return (
-    <div className="container mx-auto px-4 py-2 md:py-10">
-      <div className="mb-5 w-64">
+    <div className="container">
+      <div className="w-full">
         <label
           htmlFor="datepicker"
           className="font-bold mb-1 text-gray-700 block"
@@ -99,13 +100,12 @@ const FInputDate = ({ label, name, form }: FInputDateProps) => {
         <div className="relative">
           <input type="hidden" name="date" ref={dateRef} />
           <input
-            {...register(name)}
-            type="text"
+            type="date"
             readOnly
             value={datepickerValue}
             onClick={() => setShowDatepicker(!showDatepicker)}
             onKeyDown={(e) => e.key === "Escape" && setShowDatepicker(false)}
-            className="w-full pl-4 pr-10 py-3 border leading-none rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-500 font-medium"
+            className="w-full p-[0.6rem] border leading-none rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-500 font-medium"
             placeholder={label}
             name={name}
           />

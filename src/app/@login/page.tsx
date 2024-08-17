@@ -24,7 +24,7 @@ const LoginPage = () => {
             </div>
           </div>
           <Button
-            color="bg-purplePrimary"
+            className="bg-purplePrimary text-white"
             onClick={async () => await handleSignIn()}
           >
             Iniciar sesion

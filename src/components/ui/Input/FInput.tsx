@@ -33,11 +33,8 @@ const FInput = <T,>(props: TInputProps<T>) => {
 
   return (
     <div>
-      <label
-        htmlFor="input"
-        className={`text-sm text-gray-700 dark:text-white `}
-      >
-        {name}
+      <label htmlFor="input" className="font-bold mb-1 text-gray-700 block">
+        {label}
       </label>
       <input
         {...register(name, {
@@ -45,8 +42,8 @@ const FInput = <T,>(props: TInputProps<T>) => {
         })}
         type={type}
         id={name}
-        placeholder={`${name}`}
-        className="mt-[2px] flex h-10 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200"
+        placeholder={`${label}`}
+        className="flex h-10 w-full items-center justify-center rounded-md border bg-white/0 p-2 text-sm outline-none border-gray-200"
       />
     </div>
   );

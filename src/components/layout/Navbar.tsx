@@ -2,20 +2,18 @@
 import {
   faArrowLeft,
   faBarsStaggered,
-  faChevronLeft,
-  faRightFromBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import Text from "../ui/Text";
 import { routingMenu } from "./menu";
-import { Link, ViewTransitions } from "next-view-transitions";
+import { Link } from "next-view-transitions";
+import { Toaster } from "react-hot-toast";
 
 type TNavbar = {
   session: Session | null;
@@ -34,25 +32,17 @@ const Navbar = ({ session, children }: TNavbar) => {
   }, []);
 
   const handleShowSignOut = () => {
-    if (showSignOut) {
-      setShowSignOut(false);
-    } else {
-      setShowSignOut(true);
-    }
+    setShowSignOut(!showSignOut);
   };
 
   const handleColapseSideNav = () => {
-    if (colpaseSideNav) {
-      setColapseSideNav(false);
-    } else {
-      setColapseSideNav(true);
-    }
+    setColapseSideNav(!colpaseSideNav);
   };
 
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       <div
-        className={`flex flex-col justify-between bg-white h-screen p-3 ${
+        className={`flex flex-col justify-between bg-white h-full p-3 ${
           colpaseSideNav
             ? "w-20 transition-all duration-500 ease-in-out"
             : "w-72 transition-all duration-500 ease-in-out"
@@ -60,9 +50,7 @@ const Navbar = ({ session, children }: TNavbar) => {
       >
         <div
           className={`flex ${
-            colpaseSideNav
-              ? "flex-col "
-              : "flex-row justify-between items-center"
+            colpaseSideNav ? "flex-col " : "flex-row justify-between items-center"
           } gap-3`}
         >
           <p
@@ -78,7 +66,7 @@ const Navbar = ({ session, children }: TNavbar) => {
             />
           </p>
           <button
-            onClick={() => handleColapseSideNav()}
+            onClick={handleColapseSideNav}
             className={`p-2 rounded hover:bg-purpleSmooth hover:text-white text-gray-600`}
           >
             <FontAwesomeIcon icon={faBarsStaggered} />
@@ -90,20 +78,15 @@ const Navbar = ({ session, children }: TNavbar) => {
             {routingMenu.map((item) => (
               <Link
                 key={item.name}
-                onClick={() => {
-                  setMenuSelected(item.route);
-                }}
+                onClick={() => setMenuSelected(item.route)}
                 href={item.route}
                 className={`flex gap-3 w-full rounded ${
                   item.route == menuSelected ? "bg-primary text-white" : ""
-                }
-                font-bold px-5 py-3 text-gray-600
-                ${
+                } font-bold px-5 py-3 text-gray-600 ${
                   item.route == menuSelected
                     ? " text-white"
                     : "hover:text-purplePrimary"
-                }
-                 hover:transition-all duration-500 ease-in-out`}
+                } hover:transition-all duration-500 ease-in-out`}
               >
                 <FontAwesomeIcon
                   icon={item.icon}
@@ -117,9 +100,9 @@ const Navbar = ({ session, children }: TNavbar) => {
         </div>
       </div>
 
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col flex-1 overflow-hidden">
         <nav
-          className={`flex w-full justify-between gap-3 shadow-b-md py-3 px-2 bg-white transition-all duration-500 ease-linear `}
+          className={`flex w-full justify-between gap-3 shadow-b-md py-3 px-2 bg-white transition-all duration-500 ease-linear`}
         >
           <div className="flex gap-3 items-center w-full px-4">
             <div className="flex justify-between w-full items-center">
@@ -140,9 +123,7 @@ const Navbar = ({ session, children }: TNavbar) => {
                           height={35}
                           width={35}
                           className="rounded-full cursor-pointer"
-                          onClick={() => {
-                            handleShowSignOut();
-                          }}
+                          onClick={handleShowSignOut}
                         />
                       )}
                       {showSignOut && (
@@ -153,9 +134,7 @@ const Navbar = ({ session, children }: TNavbar) => {
                           </div>
                           <div
                             className="flex gap-2 border-t-2 pt-2 justify-center text-xs w-full font-bold text-gray-500 hover:text-purplePrimary cursor-pointer"
-                            onClick={() => {
-                              signOut({ callbackUrl: "/login" });
-                            }}
+                            onClick={() => signOut({ callbackUrl: "/login" })}
                           >
                             <FontAwesomeIcon icon={faArrowLeft} />
                             Cerrar sesión
@@ -169,8 +148,9 @@ const Navbar = ({ session, children }: TNavbar) => {
             </div>
           </div>
         </nav>
-        <div className={`flex transition-all duration-300 ease-linear`}>
+        <div className="flex-1 overflow-y-auto p-5 custom-scroll">
           {children}
+          <Toaster />
         </div>
       </div>
     </div>

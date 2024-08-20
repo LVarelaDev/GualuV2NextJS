@@ -7,7 +7,7 @@ import React from "react";
 const LoginPage = () => {
   const handleSignIn = async () => {
     await signIn("provider", {
-      callbackUrl: "/",
+      callbackUrl: "/home",
     });
   };
 

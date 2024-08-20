@@ -1,7 +1,11 @@
-import { faChevronDown, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faSearch,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { UseFormReturn } from "react-hook-form";
+import { RegisterOptions, UseFormReturn } from "react-hook-form";
 
 type props = {
   form: UseFormReturn<any, any>;
@@ -10,6 +14,7 @@ type props = {
   itemValue: string;
   name: string;
   label?: string;
+  rules?: RegisterOptions<any, string>;
 };
 
 const FComboBox = ({
@@ -19,6 +24,7 @@ const FComboBox = ({
   itemValue,
   name,
   label,
+  rules,
 }: props) => {
   const { register, formState, watch, setValue } = form;
 
@@ -36,12 +42,17 @@ const FComboBox = ({
   };
 
   useEffect(() => {
-    register(name);
-  }, [name, register]);
+    register(name, rules);
+  }, [name]);
 
   useEffect(() => {
     setValue(name, selected);
-  }, [selected, name, setValue]);
+  }, [selected, name]);
+
+  const handleCleanValue = () => {
+    setValue(name, null);
+    setSelected("");
+  };
 
   return (
     <div className="w-full">
@@ -56,13 +67,24 @@ const FComboBox = ({
           className="flex justify-between items-center bg-white w-full p-[0.6rem] rounded-md border cursor-pointer"
           onClick={handleShowOptions}
         >
-          {selected === "" ? "Selecciona una opción" : selected}
-          <FontAwesomeIcon
-            icon={faChevronDown}
-            className={`transition-transform duration-200 ${
-              showOptions ? "rotate-180" : ""
-            }`}
-          />
+          {selected === ""
+            ? "Selecciona una opción"
+            : dataList.find((x) => x[itemValue] === selected)[displayValue] ??
+              ""}
+          {selected !== "" ? (
+            <FontAwesomeIcon
+              icon={faXmark}
+              className={`transition-transform duration-20`}
+              onClick={() => handleCleanValue()}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              className={`transition-transform duration-20 ${
+                showOptions ? "rotate-180" : ""
+              }`}
+            />
+          )}
         </div>
         {showOptions && dataList && (
           <ul className="absolute z-10 bg-white border rounded-md mt-1 w-full max-h-60 overflow-y-auto shadow-lg">
@@ -89,11 +111,8 @@ const FComboBox = ({
                 <button
                   className="w-full text-left"
                   onClick={() => {
-                    if (
-                      item[displayValue].toLowerCase() !==
-                      selected?.toLowerCase()
-                    ) {
-                      setSelected(item[displayValue]);
+                    if (item[itemValue].toString() !== selected) {
+                      setSelected(item[itemValue]);
                       handleShowOptions();
                     }
                   }}

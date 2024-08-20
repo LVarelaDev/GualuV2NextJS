@@ -61,7 +61,7 @@ const Navbar = ({ session, children }: TNavbar) => {
             <Image
               width={70}
               height={70}
-              src="images/logo_gualu.svg"
+              src="/images/logoOdin.svg"
               alt="logo"
             />
           </p>

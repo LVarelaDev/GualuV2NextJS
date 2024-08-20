@@ -62,7 +62,15 @@ type TFGridColumnPropsPrivate = {
 };
 
 const FGridColumnPrivate = ({ value, className }: TFGridColumnPropsPrivate) => {
-  return <td className={`px-3 py-4 border-b border-gray-200 bg-white text-sm  ${className ?? ""}`}>{value}</td>;
+  return (
+    <td
+      className={`px-3 py-4 border-b border-gray-200 bg-white text-sm  ${
+        className ?? ""
+      }`}
+    >
+      {value}
+    </td>
+  );
 };
 
 const FGrid = <T,>(prop: TFGridProps<T>) => {
@@ -148,7 +156,9 @@ const FGrid = <T,>(prop: TFGridProps<T>) => {
           }`}
         >
           <thead
-            className={`z-[99999] px-5 py-3 border-b-2 border-gray-200 bg-purplePrimary text-left text-xs font-semibold text-gray-600 uppercase tracking-wider ${scroll ? "sticky  top-0" : ""}`}
+            className={`z-[99999] px-5 py-3 border-b-2 border-gray-200 bg-purplePrimary text-left text-xs font-semibold text-gray-600 uppercase tracking-wider ${
+              scroll ? "sticky  top-0" : ""
+            }`}
           >
             <tr>
               {React.Children.map(children, (gridColumn) => {

@@ -1,9 +1,7 @@
-import Button from "@/components/ui/Button";
 import FGrid from "@/components/ui/Grid/FGrid";
 import { FGridColumn } from "@/components/ui/Grid/FGridColumn";
 import Modal from "@/components/ui/Modal/Modal";
 import Text from "@/components/ui/Text";
-import { DriversEndPoints, getDriversPaginated } from "@/lib/axios";
 import { DriversDto } from "@/models/DriversDto";
 import { PAGE_INDEX, PAGE_SIZE } from "@/utils/contants";
 import {
@@ -13,11 +11,12 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "next-view-transitions";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR from "swr";
 import ModalDocuments from "./partials/ModalDocuments";
-import { Link } from "next-view-transitions";
+import { DriversEndPoints, getDriversPaginated } from "@/services/driversService";
 
 const Drivers = () => {
   const form = useForm();
@@ -98,7 +97,10 @@ const Drivers = () => {
     <>
       <div className="flex flex-col gap-5">
         <div className="flex justify-between items-center gap-5">
-          <Link href={`/drivers/0`} className="bg-purplePrimary text-white rounded-md p-3">
+          <Link
+            href={`/drivers/0`}
+            className="bg-purplePrimary text-white rounded-md p-3"
+          >
             Nuevo conductor
           </Link>
         </div>

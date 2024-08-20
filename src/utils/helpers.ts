@@ -1,4 +1,3 @@
-
 import { format, parseISO } from "date-fns";
 
 export const convertToCLP = (value: number) => {
@@ -6,6 +5,11 @@ export const convertToCLP = (value: number) => {
     currency: "CLP",
     style: "currency",
   });
+};
+
+export const isValidDate = (dateString: Date | null): boolean => {
+  const date = new Date(dateString ?? "");
+  return !isNaN(date.getTime());
 };
 
 /**
@@ -148,7 +152,7 @@ export function getDaysRemainingInMonth(date: Date): number | null {
   const lastDayOfMonth = new Date(
     date.getFullYear(),
     date.getMonth() + 1,
-    0,
+    0
   ).getDate();
   const currentDay = currentDate.getDate();
 

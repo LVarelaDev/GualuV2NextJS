@@ -1,3 +1,16 @@
+import { TOptions } from "@/components/ui/Input/FRadio";
+
 export const PAGE_INDEX = 1;
 export const PAGE_SIZE = 7;
 export const TYPE_DAP_ID = 1;
+
+export const OBSERVATIONS_OPTIONS: TOptions[] = [
+  {
+    value: "SERVICIO DE TRANSPORTE TERRESTRE EMPRESARIAL",
+    label: "SERVICIO DE TRANSPORTE TERRESTRE EMPRESARIAL",
+  },
+  {
+    value: "SERVICIO DE TRANSPORTE TERRESTRE DE PARTICULARES Y/O GRUPO ESPECIFICO DE PERSONAS",
+    label: "SERVICIO DE TRANSPORTE TERRESTRE DE PARTICULARES Y/O GRUPO ESPECIFICO DE PERSONAS",
+  },
+];

@@ -17,7 +17,7 @@ const typeDocs = [
 
 const FormDriver = ({ form }: props) => {
   return (
-    <div className="grid grid-cols-3 rounded-md bg-white shadow-sm p-4 gap-6 border-gray-300">
+    <div className="grid grid-cols-3 rounded-md bg-white shadow-sm p-10 gap-6 border-gray-300">
       <FComboBox
         dataList={typeDocs}
         displayValue="name"
